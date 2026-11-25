@@ -1,6 +1,6 @@
 {
   "name": "@atomic-reactor/sync-state",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A shared, path-addressable state object that dispatches events on every change. Works in browsers, React Native and Node.",
   "author": "camdagr8",
   "license": "MIT",
