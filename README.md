@@ -92,6 +92,53 @@ Dispatches a custom event to the state's listeners.
 
 `SyncState` extends `EventTarget` from [`@atomic-reactor/event-handle`](https://www.npmjs.com/package/@atomic-reactor/event-handle), which this package also re-exports along with `Event`, `AppEvent` and `Listener`.
 
+## React
+
+To use SyncState in React components, install [`@atomic-reactor/use-sync-state`](https://www.npmjs.com/package/@atomic-reactor/use-sync-state). It wraps a `SyncState` in a hook and re-renders the component when the state changes.
+
+```sh
+npm install --save @atomic-reactor/use-sync-state
+```
+
+It needs React 16.8 or later.
+
+### `useSyncState(initialState?, updateEvent?)`
+
+- `initialState`: the starting state. It is only read on the first render. Defaults to `{}`.
+- `updateEvent`: the SyncState event that triggers a re-render. Defaults to `'change'`.
+
+The hook returns a `SyncState`, so you read and write it with the same `get()` and `set()` described above.
+
+```tsx
+import { useSyncState } from '@atomic-reactor/use-sync-state';
+
+export function Counter() {
+  const state = useSyncState({ count: 0 });
+
+  return (
+    <button onClick={() => state.set('count', state.get('count') + 1)}>
+      Clicked {state.get('count')} times
+    </button>
+  );
+}
+```
+
+When the component re-renders:
+
+- With the default `'change'`, it re-renders only when a `set()` actually changes a value.
+- A silent write, `state.set('path', value, true)`, never re-renders.
+- Pass `'set'` as `updateEvent` to re-render on every `set()`, whether the value changed or not.
+
+The hook returns the same `SyncState` on every render, so you can use it inside effects and event handlers without adding it to dependency arrays. Because reads are synchronous, a handler always sees the latest value, with no stale closures:
+
+```tsx
+useEffect(() => {
+  const onKeyDown = () => console.log(state.get('query'));
+  window.addEventListener('keydown', onKeyDown);
+  return () => window.removeEventListener('keydown', onKeyDown);
+}, []);
+```
+
 ## License
 
 MIT

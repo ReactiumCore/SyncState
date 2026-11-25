@@ -1,9 +1,17 @@
 {
   "name": "@atomic-reactor/sync-state",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A shared, path-addressable state object that dispatches events on every change. Works in browsers, React Native and Node.",
   "author": "camdagr8",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReactiumCore/SyncState.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ReactiumCore/SyncState/issues"
+  },
+  "homepage": "https://github.com/ReactiumCore/SyncState#readme",
   "type": "module",
   "sideEffects": false,
   "publishConfig": {
